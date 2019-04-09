@@ -1,7 +1,7 @@
 package com.ice.restring;
 
 import android.app.Activity;
-import android.support.design.widget.BottomNavigationView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -61,8 +61,8 @@ public class RestringTest {
                     assertThat("TextView[hint]", ((TextView) view).getHint().toString(), startsWith(getLanguage()));
                 } else if (view instanceof Toolbar) {
                     assertThat("Toolbar[title]", ((Toolbar) view).getTitle().toString(), startsWith(getLanguage()));
-                } else if (view instanceof android.support.v7.widget.Toolbar) {
-                    assertThat("Toolbar[title]", ((android.support.v7.widget.Toolbar) view).getTitle().toString(), startsWith(getLanguage()));
+                } else if (view instanceof androidx.appcompat.widget.Toolbar) {
+                    assertThat("Toolbar[title]", ((androidx.appcompat.widget.Toolbar) view).getTitle().toString(), startsWith(getLanguage()));
                 } else if (view instanceof BottomNavigationView) {
                     BottomNavigationView bottomNavigationView = (BottomNavigationView) view;
                     int itemCount = bottomNavigationView.getMenu().size();

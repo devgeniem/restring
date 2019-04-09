@@ -2,8 +2,9 @@ package com.ice.restring;
 
 import android.content.res.Resources;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.text.Html;
+
+import androidx.annotation.NonNull;
 
 /**
  * This is the wrapped resources which will be provided by Restring.
@@ -14,8 +15,7 @@ class RestringResources extends Resources {
 
     private final StringRepository stringRepository;
 
-    RestringResources(@NonNull final Resources res,
-                      @NonNull final StringRepository stringRepository) {
+    RestringResources(@NonNull final Resources res, @NonNull final StringRepository stringRepository) {
         super(res.getAssets(), res.getDisplayMetrics(), res.getConfiguration());
         this.stringRepository = stringRepository;
     }
