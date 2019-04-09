@@ -2,10 +2,11 @@ package com.ice.restring;
 
 import android.content.Context;
 import android.content.res.Resources;
+
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Toolbar;
 
 import org.junit.Before;
 import org.junit.Test;

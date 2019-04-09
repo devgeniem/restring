@@ -5,7 +5,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.ice.restring.activity.TestActivity;
 import com.ice.restring.shadow.MyShadowAsyncTask;
@@ -24,6 +23,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import androidx.appcompat.widget.Toolbar;
 
 import static org.hamcrest.core.StringStartsWith.startsWith;
 import static org.junit.Assert.assertThat;

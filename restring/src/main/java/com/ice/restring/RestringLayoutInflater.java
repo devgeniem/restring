@@ -29,6 +29,7 @@ class RestringLayoutInflater extends LayoutInflater {
 
     private static final String[] sClassPrefixList = {
             "android.widget.",
+            "androidx.appcompat.widget.",
             "android.webkit.",
             "android.app."
     };
