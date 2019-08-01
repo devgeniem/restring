@@ -12,7 +12,7 @@ public class TestActivity extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(Restring.wrapContext(newBase));
+        super.attachBaseContext(Restring.INSTANCE.wrapContext(newBase));
     }
 
     @Override

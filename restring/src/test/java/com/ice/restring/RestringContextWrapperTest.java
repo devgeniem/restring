@@ -49,7 +49,7 @@ public class RestringContextWrapperTest {
         originalResources = context.getResources();
 
         when(transformerManager.transform(any(), any())).thenAnswer(i -> i.getArgument(0));
-        restringContextWrapper = RestringContextWrapper.wrap(
+        restringContextWrapper = RestringContextWrapper.Companion.wrap(
                 context,
                 stringRepository,
                 transformerManager

@@ -32,7 +32,6 @@ class SharedPrefStringRepository implements StringRepository {
     @Override
     public void setString(String language, String key, String value) {
         memoryStringRepository.setString(language, key, value);
-
         Map<String, String> keyValues = memoryStringRepository.getStrings(language);
         keyValues.put(key, value);
         saveStrings(language, keyValues);

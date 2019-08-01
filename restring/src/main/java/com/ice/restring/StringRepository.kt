@@ -1,11 +1,9 @@
-package com.ice.restring;
-
-import java.util.Map;
+package com.ice.restring
 
 /**
  * Repository of strings.
  */
-interface StringRepository {
+internal interface StringRepository {
 
     /**
      * Set strings(key, value) for a specific language.
@@ -13,7 +11,7 @@ interface StringRepository {
      * @param language the strings belongs to.
      * @param strings  new strings for the language.
      */
-    void setStrings(String language, Map<String, String> strings);
+    fun setStrings(language: String, strings: Map<String, String>)
 
     /**
      * set a single string(key, value) for a specific language.
@@ -22,7 +20,7 @@ interface StringRepository {
      * @param key      the key of the string which is the string resource id.
      * @param value    the new string.
      */
-    void setString(String language, String key, String value);
+    fun setString(language: String, key: String, value: String)
 
     /**
      * Get a string for a language & key.
@@ -31,7 +29,7 @@ interface StringRepository {
      * @param key      the string resource id.
      * @return the string if exists, otherwise NULL.
      */
-    String getString(String language, String key);
+    fun getString(language: String, key: String): String?
 
     /**
      * Get all strings for a specific language.
@@ -39,5 +37,5 @@ interface StringRepository {
      * @param language the lanugage of the strings.
      * @return the map of string key & values. return empty map if there's no.
      */
-    Map<String, String> getStrings(String language);
+    fun getStrings(language: String): Map<String, String>
 }

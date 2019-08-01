@@ -34,7 +34,7 @@ public class RestringTest {
 
     @Before
     public void setUp() {
-        Restring.init(
+        Restring.INSTANCE.init(
                 RuntimeEnvironment.application,
                 new RestringConfig.Builder()
                         .persist(false)
