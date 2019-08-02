@@ -1,0 +1,42 @@
+package com.ice.restring.example
+
+import com.ice.restring.Restring
+
+import java.util.Arrays
+import java.util.HashMap
+
+/**
+ * This is just a really simple sample of strings loader.
+ * in real applications, you might call an API to get your strings.
+ *
+ *
+ * All overridden methods will be called on background thread.
+ */
+class SampleStringsLoader : Restring.StringsLoader {
+
+    override val languages: List<String>
+        get() = Arrays.asList("en", "de", "fa")
+
+    override fun getStrings(language: String): Map<String, String> {
+        val map = HashMap<String, String>()
+        when (language) {
+            "en" -> {
+                map["title"] = "This is title (from restring)."
+                map["subtitle"] = "This is subtitle (from restring)."
+            }
+            "de" -> {
+                map["title"] = "Das ist Titel (from restring)."
+                map["subtitle"] = "Das ist Untertitel (from restring)."
+            }
+            "fa" -> {
+                map["title"] = "In sarkhat ast (from restring)."
+                map["subtitle"] = "In matn ast (from restring)."
+            }
+        }
+        return map
+    }
+
+    override fun onComplete() {
+
+    }
+}

@@ -3,7 +3,7 @@ package com.ice.restring
 /**
  * Repository of strings.
  */
-internal interface StringRepository {
+interface StringRepository {
 
     /**
      * Set strings(key, value) for a specific language.

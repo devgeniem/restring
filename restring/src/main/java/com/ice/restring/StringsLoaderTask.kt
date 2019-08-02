@@ -12,7 +12,7 @@ import java.util.LinkedHashMap
  * FIRST it retrieves all supported languages,
  * THEN it retrieves all strings(key, value) for each language.
  */
-internal class StringsLoaderTask(private val stringsLoader: Restring.StringsLoader,
+class StringsLoaderTask(private val stringsLoader: Restring.StringsLoader,
                                  private val stringRepository: StringRepository) : AsyncTask<Void, Void, Map<String, Map<String, String>>>() {
 
     fun run() {

@@ -3,17 +3,19 @@ package com.ice.restring
 import android.content.res.Resources
 import android.os.Build
 import android.text.Html
-import android.util.Log
 
 /**
  * This is the wrapped resources which will be provided by Restring.
  * For getting strings and texts, it checks the strings repository first and if there's a new string
  * that will be returned, otherwise it will fallback to the original resource strings.
  */
-internal class RestringResources(res: Resources,
-                                 private val stringRepository: StringRepository,
-                                 private val missingTranslationHandler: Restring.MissingTranslationHandler? = null
+class RestringResources(
+    res: Resources,
+    private val stringRepository: StringRepository,
+    private val missingTranslationHandler: Restring.MissingTranslationHandler? = null
 ) : Resources(res.assets, res.displayMetrics, res.configuration) {
+
+
 
     @Throws(NotFoundException::class)
     override fun getString(id: Int): String {

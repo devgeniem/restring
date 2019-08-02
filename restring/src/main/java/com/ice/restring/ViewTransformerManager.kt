@@ -1,11 +1,10 @@
-package com.ice.restring;
+package com.ice.restring
 
-import android.util.AttributeSet;
-import android.util.Pair;
-import android.view.View;
+import android.util.AttributeSet
+import android.util.Pair
+import android.view.View
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayList
 
 /**
  * Manages all view transformers as a central point for layout inflater.
@@ -13,15 +12,15 @@ import java.util.List;
  */
 class ViewTransformerManager {
 
-    private List<Pair<Class<? extends View>, Transformer>> transformers = new ArrayList<>();
+    private val transformers = ArrayList<Pair<Class<out View>, Transformer>>()
 
     /**
      * Register a new view transformer to be applied on newly inflating views.
      *
      * @param transformer to be added to transformers list.
      */
-    void registerTransformer(Transformer transformer) {
-        transformers.add(new Pair<>(transformer.getViewType(), transformer));
+    fun registerTransformer(transformer: Transformer) {
+        transformers.add(Pair(transformer.viewType, transformer))
     }
 
     /**
@@ -33,23 +32,23 @@ class ViewTransformerManager {
      * @param attrs attributes of the view.
      * @return the transformed view.
      */
-    View transform(View view, AttributeSet attrs) {
+    fun transform(view: View?, attrs: AttributeSet): View? {
         if (view == null) {
-            return null;
+            return null
         }
 
-        View newView = view;
-        for (Pair<Class<? extends View>, Transformer> pair : transformers) {
-            Class<? extends View> type = pair.first;
+        var newView: View = view
+        for (pair in transformers) {
+            val type = pair.first
             if (!type.isInstance(view)) {
-                continue;
+                continue
             }
 
-            Transformer transformer = pair.second;
-            newView = transformer.transform(newView, attrs);
+            val transformer = pair.second
+            newView = transformer.transform(newView, attrs)
         }
 
-        return newView;
+        return newView
     }
 
     /**
@@ -61,7 +60,7 @@ class ViewTransformerManager {
          *
          * @return the type of view.
          */
-        Class<? extends View> getViewType();
+        val viewType: Class<out View>
 
         /**
          * Apply transformation to a view.
@@ -70,6 +69,6 @@ class ViewTransformerManager {
          * @param attrs attributes of the view.
          * @return the transformed view.
          */
-        View transform(View view, AttributeSet attrs);
+        fun transform(view: View, attrs: AttributeSet): View
     }
 }
