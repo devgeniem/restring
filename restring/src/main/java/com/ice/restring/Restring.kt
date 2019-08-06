@@ -109,6 +109,6 @@ object Restring {
     }
 
     interface MissingTranslationHandler {
-        fun missingTranslation(language: String, key: String)
+        fun missingTranslation(language: String, key: String, localValue: String)
     }
 }

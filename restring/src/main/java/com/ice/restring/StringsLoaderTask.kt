@@ -25,7 +25,7 @@ class StringsLoaderTask(private val stringsLoader: Restring.StringsLoader,
         val languages = stringsLoader.languages
         for (lang in languages) {
             val keyValues = stringsLoader.getStrings(lang)
-            if (keyValues != null && keyValues.size > 0) {
+            if (keyValues != null && keyValues.isNotEmpty()) {
                 langStrings[lang] = keyValues
             }
         }
