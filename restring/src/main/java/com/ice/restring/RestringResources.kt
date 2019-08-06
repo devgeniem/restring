@@ -16,7 +16,6 @@ class RestringResources(
 ) : Resources(res.assets, res.displayMetrics, res.configuration) {
 
 
-
     @Throws(NotFoundException::class)
     override fun getString(id: Int): String {
         val value = getStringFromRepository(id)
@@ -47,7 +46,11 @@ class RestringResources(
         val stringKey = getResourceEntryName(id)
         val str = stringRepository.getString(lang, stringKey)
         if (str == null) {
-            val local = super.getString(id)
+            val local: String? = try {
+                super.getString(id)
+            } catch (e: Exception) {
+                null
+            }
             missingTranslationHandler?.missingTranslation(lang, stringKey, local)
         }
         return str
