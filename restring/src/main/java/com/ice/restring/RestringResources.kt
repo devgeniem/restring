@@ -25,35 +25,49 @@ class RestringResources(
     @Throws(NotFoundException::class)
     override fun getString(id: Int, vararg formatArgs: Any): String {
         val value = getStringFromRepository(id)
-        return if (value != null) {
+        val missingFromRepo = value == null
+        val result = if (value != null) {
             String.format(value, *formatArgs)
         } else super.getString(id, *formatArgs)
+        if (missingFromRepo) {
+            handleMissingString(id, result)
+        }
+        return result
     }
 
     @Throws(NotFoundException::class)
     override fun getText(id: Int): CharSequence {
         val value = getStringFromRepository(id)
-        return value?.let { fromHtml(it) } ?: super.getText(id)
+        val missingFromRepo = value == null
+        val res = value?.let { fromHtml(it) } ?: super.getText(id)
+        if (missingFromRepo) {
+            handleMissingString(id, res.toString())
+        }
+        return res
     }
 
     override fun getText(id: Int, def: CharSequence): CharSequence {
         val value = getStringFromRepository(id)
-        return value?.let { fromHtml(it) } ?: super.getText(id, def)
+        val missingFromRepo = value == null
+        val res = value?.let { fromHtml(it) } ?: super.getText(id, def)
+        if (missingFromRepo) {
+            handleMissingString(id, res.toString())
+        }
+        return res
+    }
+
+    private fun handleMissingString(id: Int, valueInOriginalResources: String) {
+        missingTranslationHandler?.let {
+            val lang = RestringUtil.currentLanguage
+            val stringKey = getResourceEntryName(id)
+            it.missingTranslation(lang, stringKey, valueInOriginalResources)
+        }
     }
 
     private fun getStringFromRepository(id: Int): String? {
         val lang = RestringUtil.currentLanguage
         val stringKey = getResourceEntryName(id)
-        val str = stringRepository.getString(lang, stringKey)
-        if (str == null) {
-            val local: String? = try {
-                super.getString(id)
-            } catch (e: Exception) {
-                null
-            }
-            missingTranslationHandler?.missingTranslation(lang, stringKey, local)
-        }
-        return str
+        return stringRepository.getString(lang, stringKey)
     }
 
     private fun fromHtml(source: String): CharSequence {
