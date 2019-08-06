@@ -47,14 +47,14 @@ class RestringResources(
         val stringKey = getResourceEntryName(id)
         val str = stringRepository.getString(lang, stringKey)
         if (str == null) {
-            missingTranslationHandler?.missingTranslation(lang, stringKey)
+            val local = super.getString(id)
+            missingTranslationHandler?.missingTranslation(lang, stringKey, local)
         }
         return str
     }
 
     private fun fromHtml(source: String): CharSequence {
         return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-
             Html.fromHtml(source)
         } else {
             Html.fromHtml(source, Html.FROM_HTML_MODE_COMPACT)
