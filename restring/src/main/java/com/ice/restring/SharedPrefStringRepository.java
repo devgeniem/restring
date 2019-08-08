@@ -2,6 +2,7 @@ package com.ice.restring;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -79,7 +80,12 @@ class SharedPrefStringRepository implements StringRepository {
         String[] items = content.split(",");
         for (String item : items) {
             String[] itemKeyValue = item.split("=");
-            keyValues.put(itemKeyValue[0], itemKeyValue[1].replaceAll(",,", ","));
+            if (itemKeyValue.length == 2) {
+                keyValues.put(itemKeyValue[0], itemKeyValue[1].replaceAll(",,", ","));
+            }
+            else {
+                Log.e("SharedPrefs", "deserialization ran into key into broken key value pair: " + item);
+            }
         }
         return keyValues;
     }
