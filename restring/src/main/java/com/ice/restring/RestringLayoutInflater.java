@@ -175,8 +175,9 @@ class RestringLayoutInflater extends LayoutInflater {
         // significant difference to performance on Android 4.0+.
 
         // Skip for RadialTimePickerView
-        if (view typeof RadialTimePickerView)
+        if (view instanceof RadialTimePickerView) {
             return view;
+        }
 
         // If CustomViewCreation is off skip this.        
         if (view == null && name.indexOf('.') > -1) {
