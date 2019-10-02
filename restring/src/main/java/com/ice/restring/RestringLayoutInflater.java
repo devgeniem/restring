@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadialTimePickerView;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -173,7 +174,11 @@ class RestringLayoutInflater extends LayoutInflater {
         // We also maintain the Field reference and make it accessible which will make a pretty
         // significant difference to performance on Android 4.0+.
 
-        // If CustomViewCreation is off skip this.
+        // Skip for RadialTimePickerView
+        if (view typeof RadialTimePickerView)
+            return view;
+
+        // If CustomViewCreation is off skip this.        
         if (view == null && name.indexOf('.') > -1) {
             if (mConstructorArgs == null)
                 mConstructorArgs = ReflectionUtils.getField(LayoutInflater.class, "mConstructorArgs");
