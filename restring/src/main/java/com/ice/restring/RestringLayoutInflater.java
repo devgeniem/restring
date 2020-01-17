@@ -3,7 +3,7 @@ package com.ice.restring;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,13 +22,14 @@ import java.lang.reflect.Method;
  * the string attribute set as a string resource it transforms the text and apply it to the view again.
  */
 class RestringLayoutInflater extends LayoutInflater {
-
+    private static final Boolean IS_AT_LEAST_Q = Build.VERSION.SDK_INT > Build.VERSION_CODES.P;
     private boolean privateFactorySet = false;
     private Field mConstructorArgs = null;
     private ViewTransformerManager viewTransformerManager;
 
     private static final String[] sClassPrefixList = {
             "android.widget.",
+            "androidx.appcompat.widget.",
             "android.webkit.",
             "android.app."
     };
@@ -175,22 +176,30 @@ class RestringLayoutInflater extends LayoutInflater {
 
         // If CustomViewCreation is off skip this.
         if (view == null && name.indexOf('.') > -1) {
-            if (mConstructorArgs == null)
-                mConstructorArgs = ReflectionUtils.getField(LayoutInflater.class, "mConstructorArgs");
+            if (IS_AT_LEAST_Q) {
+                try {
+                    view = cloneInContext(viewContext).createView(name, null, attrs);
+                } catch (ClassNotFoundException e) {
+                    /* Do nothing. */
+                }
+            } else {
+                if (mConstructorArgs == null)
+                    mConstructorArgs = ReflectionUtils.getField(LayoutInflater.class, "mConstructorArgs");
 
-            final Object[] mConstructorArgsArr = (Object[]) ReflectionUtils.getValue(mConstructorArgs, this);
-            final Object lastContext = mConstructorArgsArr[0];
-            // The LayoutInflater actually finds out the correct context to use. We just need to set
-            // it on the mConstructor for the internal method.
-            // Set the constructor ars up for the createView, not sure why we can't pass these in.
-            mConstructorArgsArr[0] = viewContext;
-            ReflectionUtils.setValue(mConstructorArgs, this, mConstructorArgsArr);
-            try {
-                view = createView(name, null, attrs);
-            } catch (ClassNotFoundException ignored) {
-            } finally {
-                mConstructorArgsArr[0] = lastContext;
+                final Object[] mConstructorArgsArr = (Object[]) ReflectionUtils.getValue(mConstructorArgs, this);
+                final Object lastContext = mConstructorArgsArr[0];
+                // The LayoutInflater actually finds out the correct context to use. We just need to set
+                // it on the mConstructor for the internal method.
+                // Set the constructor ars up for the createView, not sure why we can't pass these in.
+                mConstructorArgsArr[0] = viewContext;
                 ReflectionUtils.setValue(mConstructorArgs, this, mConstructorArgsArr);
+                try {
+                    view = createView(name, null, attrs);
+                } catch (ClassNotFoundException ignored) {
+                } finally {
+                    mConstructorArgsArr[0] = lastContext;
+                    ReflectionUtils.setValue(mConstructorArgs, this, mConstructorArgsArr);
+                }
             }
         }
         return view;
