@@ -79,7 +79,8 @@ class SharedPrefStringRepository implements StringRepository {
         String[] items = content.split(",");
         for (String item : items) {
             String[] itemKeyValue = item.split("=");
-            keyValues.put(itemKeyValue[0], itemKeyValue[1].replaceAll(",,", ","));
+            if (itemKeyValue.length == 2)
+                keyValues.put(itemKeyValue[0], itemKeyValue[1].replaceAll(",,", ","));
         }
         return keyValues;
     }
